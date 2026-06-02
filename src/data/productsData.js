@@ -1,0 +1,26 @@
+export const products = [
+  {
+    id: 1,
+    name: 'Solid Cement Blocks',
+    description: 'Dense, high-strength solid blocks ideal for load-bearing walls and structural applications. Manufactured with precision for uniform dimensions and superior strength.',
+    features: ['High compressive strength', 'Uniform dimensions', 'Weather resistant', 'Low water absorption'],
+    applications: ['Houses', 'Compound Walls', 'Commercial Buildings'],
+    sizes: ['6" × 8" × 16"', '4" × 8" × 16"', '8" × 8" × 16"'],
+  },
+  {
+    id: 2,
+    name: 'Hollow Cement Blocks',
+    description: 'Lightweight hollow blocks offering excellent thermal insulation and reduced construction weight, making them cost-effective for large-scale projects.',
+    features: ['Lightweight construction', 'Thermal insulation', 'Cost effective', 'Easy to lay'],
+    applications: ['Residential Construction', 'Commercial Projects', 'Partition Walls'],
+    sizes: ['6" × 8" × 16"', '4" × 8" × 16"', '8" × 8" × 16"'],
+  },
+  {
+    id: 3,
+    name: 'Concrete Building Blocks',
+    description: 'Premium concrete blocks engineered for structural integrity in major construction projects, compliant with IS standards for quality and durability.',
+    features: ['IS code compliant', 'Precise dimensions', 'High durability', 'Bulk availability'],
+    applications: ['Structural Walls', 'Boundary Walls', 'Industrial Buildings'],
+    sizes: ['6" × 8" × 16"', '4" × 8" × 16"', '8" × 8" × 16"'],
+  },
+]
