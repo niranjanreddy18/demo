@@ -9,6 +9,7 @@ const links = [
   { to: '/gallery', label: 'Gallery' },
   { to: '/faq', label: 'FAQ' },
   { to: '/contact', label: 'Contact' },
+  { to: '/admin', label: 'Admin' },
 ]
 
 export default function Navbar({ openQuote, phoneNumbers = [] }) {
