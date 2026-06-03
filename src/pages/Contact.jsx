@@ -1,7 +1,11 @@
 import { useState } from 'react'
 import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaWhatsapp, FaClock } from 'react-icons/fa'
 
-export default function Contact({ showToast }) {
+export default function Contact({ showToast, phoneNumbers = [], productOptions = [] }) {
+  const phones = phoneNumbers.length ? phoneNumbers : ['+91 9160171151', '+91 9090223330']
+  const productSelection = productOptions.length
+    ? productOptions
+    : ['Solid Cement Blocks', 'Hollow Cement Blocks', 'Concrete Building Blocks']
   const [form, setForm] = useState({
     name: '', phone: '', productType: '', quantity: '', message: ''
   })
@@ -53,8 +57,11 @@ export default function Contact({ showToast }) {
                 label: 'Phone Numbers',
                 content: (
                   <div>
-                    <a href="tel:+919160171151" className="block text-cement-900 hover:text-cement-600 font-semibold text-sm">+91 9160171151</a>
-                    <a href="tel:+919090223330" className="block text-cement-900 hover:text-cement-600 font-semibold text-sm">+91 9090223330</a>
+                    {phones.map(number => (
+                      <a key={number} href={`tel:${number.replace(/\s+/g, '')}`} className="block text-cement-900 hover:text-cement-600 font-semibold text-sm">
+                        {number}
+                      </a>
+                    ))}
                   </div>
                 )
               },
@@ -96,7 +103,7 @@ export default function Contact({ showToast }) {
           </div>
 
           <a
-            href="https://wa.me/919160171151"
+            href={`https://wa.me/${phones[0].replace(/\D/g, '')}`}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-3 bg-green-600 hover:bg-green-500 text-white px-6 py-3 font-heading font-bold uppercase tracking-wider text-sm transition-colors"
@@ -146,9 +153,9 @@ export default function Contact({ showToast }) {
                 className="w-full border border-cement-300 px-4 py-3 text-sm focus:outline-none focus:border-cement-700 bg-cement-50"
               >
                 <option value="">Select a product (optional)</option>
-                <option>Solid Cement Blocks</option>
-                <option>Hollow Cement Blocks</option>
-                <option>Concrete Building Blocks</option>
+                {productSelection.map(option => (
+                  <option key={option}>{option}</option>
+                ))}
                 <option>Mixed / Not Sure</option>
               </select>
             </div>

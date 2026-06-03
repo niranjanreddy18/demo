@@ -11,7 +11,7 @@ const links = [
   { to: '/contact', label: 'Contact' },
 ]
 
-export default function Navbar({ openQuote }) {
+export default function Navbar({ openQuote, phoneNumbers = [] }) {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
   const location = useLocation()
@@ -28,12 +28,11 @@ export default function Navbar({ openQuote }) {
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-white shadow-md' : 'bg-transparent'}`}>
       {/* Top bar */}
       <div className={`hidden md:flex items-center justify-end gap-6 px-8 py-1.5 text-xs font-body transition-all ${scrolled ? 'bg-cement-900 text-white' : 'bg-black/40 text-white/90'}`}>
-        <a href="tel:+919160171151" className="flex items-center gap-1.5 hover:text-white">
-          <FaPhone className="text-[10px]" /> +91 9160171151
-        </a>
-        <a href="tel:+919090223330" className="flex items-center gap-1.5 hover:text-white">
-          <FaPhone className="text-[10px]" /> +91 9090223330
-        </a>
+        {phoneNumbers.map(number => (
+          <a key={number} href={`tel:${number.replace(/\s+/g, '')}`} className="flex items-center gap-1.5 hover:text-white">
+            <FaPhone className="text-[10px]" /> {number}
+          </a>
+        ))}
         <a href="mailto:sribalajicementblocks@gmail.com" className="hover:text-white">
           sribalajicementblocks@gmail.com
         </a>
@@ -89,8 +88,11 @@ export default function Navbar({ openQuote }) {
             Get Quote
           </button>
           <div className="border-t border-cement-100 pt-3 flex flex-col gap-2 text-xs text-cement-500">
-            <a href="tel:+919160171151">+91 9160171151</a>
-            <a href="tel:+919090223330">+91 9090223330</a>
+            {phoneNumbers.map(number => (
+              <a key={number} href={`tel:${number.replace(/\s+/g, '')}`} className="block">
+                {number}
+              </a>
+            ))}
           </div>
         </div>
       )}

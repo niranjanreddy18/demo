@@ -1,7 +1,11 @@
 import { useState } from 'react'
 import { FaTimes } from 'react-icons/fa'
 
-export default function QuoteModal({ product, onClose, showToast }) {
+export default function QuoteModal({ product, productTypes = [], onClose, showToast }) {
+  const productSelection = productTypes.length
+    ? productTypes
+    : ['Solid Cement Blocks', 'Hollow Cement Blocks', 'Concrete Building Blocks']
+
   const [form, setForm] = useState({
     name: '', phone: '', productType: product || '', quantity: '', message: ''
   })
@@ -73,9 +77,9 @@ export default function QuoteModal({ product, onClose, showToast }) {
               className="w-full border border-cement-300 px-4 py-2.5 text-sm focus:outline-none focus:border-cement-600 bg-cement-50"
             >
               <option value="">Select a product</option>
-              <option>Solid Cement Blocks</option>
-              <option>Hollow Cement Blocks</option>
-              <option>Concrete Building Blocks</option>
+              {productSelection.map(option => (
+                <option key={option}>{option}</option>
+              ))}
             </select>
             {errors.productType && <p className="text-red-500 text-xs mt-1">{errors.productType}</p>}
           </div>

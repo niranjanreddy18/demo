@@ -1,7 +1,9 @@
 import { Link } from 'react-router-dom'
 import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaWhatsapp } from 'react-icons/fa'
 
-export default function Footer({ openQuote }) {
+export default function Footer({ openQuote, phoneNumbers = [] }) {
+  const phones = phoneNumbers.length ? phoneNumbers : ['+91 9160171151', '+91 9090223330']
+  const whatsappNumber = phones[0].replace(/\D/g, '')
   return (
     <footer className="bg-cement-950 text-white">
       <div className="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-4 gap-12">
@@ -20,7 +22,7 @@ export default function Footer({ openQuote }) {
         <div>
           <h4 className="font-heading font-bold uppercase tracking-widest text-cement-300 mb-4 text-sm">Quick Links</h4>
           <ul className="space-y-2">
-            {[['/', 'Home'], ['/about', 'About Us'], ['/products', 'Products'], ['/gallery', 'Gallery'], ['/faq', 'FAQ'], ['/contact', 'Contact']].map(([to, label]) => (
+            {[['/', 'Home'], ['/about', 'About Us'], ['/products', 'Products'], ['/gallery', 'Gallery'], ['/faq', 'FAQ'], ['/contact', 'Contact'], ['/admin', 'Admin']].map(([to, label]) => (
               <li key={to}>
                 <Link to={to} className="text-cement-400 hover:text-white text-sm transition-colors">{label}</Link>
               </li>
@@ -34,8 +36,11 @@ export default function Footer({ openQuote }) {
             <li className="flex gap-3 text-sm text-cement-400">
               <FaPhone className="mt-0.5 text-cement-500 shrink-0" />
               <div>
-                <a href="tel:+919160171151" className="hover:text-white block">+91 9160171151</a>
-                <a href="tel:+919090223330" className="hover:text-white block">+91 9090223330</a>
+                {phones.map(number => (
+                  <a key={number} href={`tel:${number.replace(/\s+/g, '')}`} className="hover:text-white block">
+                    {number}
+                  </a>
+                ))}
               </div>
             </li>
             <li className="flex gap-3 text-sm text-cement-400">
@@ -57,7 +62,7 @@ export default function Footer({ openQuote }) {
             </li>
           </ul>
           <a
-            href="https://wa.me/919160171151"
+            href={`https://wa.me/${whatsappNumber}`}
             target="_blank"
             rel="noopener noreferrer"
             className="mt-5 inline-flex items-center gap-2 bg-green-600 hover:bg-green-500 text-white px-4 py-2 text-sm font-semibold transition-colors"

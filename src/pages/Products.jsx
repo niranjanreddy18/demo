@@ -1,10 +1,11 @@
-import { products } from '../data/productsData'
 import { img4, img5, img7 } from '../data/galleryData'
 import { FaCheckCircle } from 'react-icons/fa'
 
 const productImages = [img5, img7, img4]
 
-export default function Products({ openQuote }) {
+export default function Products({ openQuote, products = [] }) {
+  const visibleProducts = products.filter(product => product.available !== false)
+
   return (
     <main className="pt-28">
       <section className="bg-cement-900 text-white py-16 px-6 text-center">
@@ -15,11 +16,16 @@ export default function Products({ openQuote }) {
 
       <section className="max-w-7xl mx-auto px-6 py-20">
         <div className="space-y-16">
-          {products.map((product, i) => (
+          {visibleProducts.length === 0 ? (
+            <div className="rounded-3xl border border-cement-200 bg-cement-50 p-10 text-center text-cement-600">
+              <p className="font-heading text-xl font-semibold">No products are currently available.</p>
+              <p className="mt-3">Please check back later or contact us for custom orders.</p>
+            </div>
+          ) : visibleProducts.map((product, i) => (
             <div key={product.id} className={`grid md:grid-cols-2 gap-10 items-center ${i % 2 !== 0 ? 'md:flex-row-reverse' : ''}`}>
               <div className={`${i % 2 !== 0 ? 'md:order-2' : ''}`}>
                 <img
-                  src={productImages[i]}
+                  src={productImages[i % productImages.length]}
                   alt={product.name}
                   className="w-full h-72 md:h-96 object-cover shadow-lg"
                 />
@@ -27,12 +33,18 @@ export default function Products({ openQuote }) {
               <div className={`${i % 2 !== 0 ? 'md:order-1' : ''}`}>
                 <p className="font-heading text-sm font-semibold uppercase tracking-[0.3em] text-cement-500 mb-2">Product {String(i + 1).padStart(2, '0')}</p>
                 <h2 className="font-heading text-3xl md:text-4xl font-black uppercase text-cement-900 mb-4">{product.name}</h2>
-                <p className="text-cement-600 leading-relaxed mb-6">{product.description}</p>
+                <p className="text-cement-600 leading-relaxed mb-3">{product.description || 'Discover our high-quality cement block solutions, tailored for strength, efficiency, and durability.'}</p>
+                {product.price && (
+                  <p className="text-cement-900 font-bold text-xl mb-3">Starting at {product.price}</p>
+                )}
+                {product.stock != null && (
+                  <p className="text-cement-700 font-semibold mb-6">Stock: {product.stock} blocks available</p>
+                )}
 
                 <div className="mb-6">
                   <h4 className="font-heading font-bold uppercase tracking-wider text-cement-700 text-sm mb-3">Key Features</h4>
                   <ul className="space-y-2">
-                    {product.features.map(f => (
+                    {(product.features || []).map(f => (
                       <li key={f} className="flex items-center gap-2 text-cement-600 text-sm">
                         <FaCheckCircle className="text-cement-700 shrink-0" /> {f}
                       </li>
@@ -43,7 +55,7 @@ export default function Products({ openQuote }) {
                 <div className="mb-6">
                   <h4 className="font-heading font-bold uppercase tracking-wider text-cement-700 text-sm mb-3">Applications</h4>
                   <div className="flex flex-wrap gap-2">
-                    {product.applications.map(a => (
+                    {(product.applications || []).map(a => (
                       <span key={a} className="bg-cement-100 text-cement-700 px-3 py-1 text-xs font-semibold uppercase tracking-wide">
                         {a}
                       </span>
@@ -54,7 +66,7 @@ export default function Products({ openQuote }) {
                 <div className="mb-8">
                   <h4 className="font-heading font-bold uppercase tracking-wider text-cement-700 text-sm mb-3">Available Sizes</h4>
                   <div className="flex flex-wrap gap-2">
-                    {product.sizes.map(s => (
+                    {(product.sizes || []).map(s => (
                       <span key={s} className="border border-cement-300 text-cement-600 px-3 py-1 text-xs font-mono">
                         {s}
                       </span>
